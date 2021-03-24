@@ -7,19 +7,25 @@ const dayjs = require("dayjs");
 class UserController extends Controller {
   async jwtSign() {
     const { ctx, app } = this;
-    const username = ctx.request.body.username;
+    const username = ctx.params("username");
     const token = app.jwt.sign(
       {
         username,
       },
       app.config.jwt.secret
     );
-    await app.redis.set(username, 1, "EX", app.config.REDIS_EXPIRED);
+    await app.redis.set(username, token, "EX", app.config.REDIS_EXPIRED);
     return token;
+  }
+  parseResult(ctx, result) {
+    return {
+      ...ctx.helper.unPick(result.dataValues, ["password"]),
+      create_time: ctx.helper.timestamp(result.create_time),
+    }
   }
   async register() {
     const { ctx, app } = this;
-    const params = ctx.request.body;
+    const params = ctx.params();
     const user = await ctx.service.user.getUser(params.username);
     if (user) {
       ctx.body = {
@@ -52,15 +58,14 @@ class UserController extends Controller {
   }
   async login() {
     const { ctx } = this;
-    const { username, password } = ctx.request.body;
+    const { username, password } = ctx.params();
     const user = await ctx.service.user.getUser(username, password);
     if (user) {
       const token = await this.jwtSign();
       ctx.body = {
         status: 200,
         data: {
-          ...ctx.helper.unPick(user.dataValues, ["password"]),
-          create_time: ctx.helper.timestamp(user.create_time),
+          ...this.parseResult(ctx, user),
           token,
         },
       };
