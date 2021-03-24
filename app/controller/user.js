@@ -2,7 +2,7 @@
 
 const Controller = require("egg").Controller;
 const md5 = require("md5");
-const dayjs = require('dayjs')
+const dayjs = require("dayjs");
 
 class UserController extends Controller {
   async register() {
@@ -18,18 +18,41 @@ class UserController extends Controller {
     }
     const result = await ctx.service.user.add({
       ...params,
-      password: md5(params.password + app.config.SALT),
-      create_time: dayjs().format('YYYY-MM-DD HH:mm:ss')
+      password: md5(`${params.password}${app.config.SALT}`),
+      create_time: ctx.helper.time(),
     });
     if (result) {
       ctx.body = {
         status: 200,
-        data: result,
+        data: {
+          ...ctx.helper.unPick(result.dataValues, ["password"]),
+          create_time: ctx.helper.timestamp(result.create_time),
+        },
       };
     } else {
       ctx.body = {
         status: 500,
         errMsg: "注册用户失败",
+      };
+    }
+  }
+  async login() {
+    const { ctx } = this;
+    const { username, password } = ctx.request.body;
+    const user = await ctx.service.user.getUser(username, password);
+    if (user) {
+      ctx.session.userId = user.id;
+      ctx.body = {
+        status: 200,
+        data: {
+          ...ctx.helper.unPick(user.dataValues, ["password"]),
+          create_time: ctx.helper.timestamp(user.create_time),
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 500,
+        errMsg: "该用户不存在",
       };
     }
   }
