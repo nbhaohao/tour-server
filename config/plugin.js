@@ -1,32 +1,27 @@
-'use strict';
-const path = require('path');
+"use strict";
+const path = require("path");
 
 exports.validate = {
   enable: true,
-  package: 'egg-validate',
+  package: "egg-validate",
 };
 
 exports.ejs = {
   enable: true,
-  package: 'egg-view-ejs'
+  package: "egg-view-ejs",
 };
 
 exports.auth = {
   enable: false,
-  path: path.join(__dirname, '../lib/plugin/egg-auth')
+  path: path.join(__dirname, "../lib/plugin/egg-auth"),
 };
 
 exports.info = {
   enable: true,
-  path: path.join(__dirname, '../lib/plugin/egg-info')
-};
-
-exports.mysql = {
-  enable: true,
-  package: 'egg-mysql'
+  path: path.join(__dirname, "../lib/plugin/egg-info"),
 };
 
 exports.sequelize = {
   enable: true,
-  package: 'egg-sequelize'
+  package: "egg-sequelize",
 };
