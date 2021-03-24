@@ -49,14 +49,14 @@ module.exports = (appInfo) => {
   };
 
   config.session = {
-    key: "MUKE_SESS",
+    key: "TOUR_SESS",
     httpOnly: true,
-    maxAge: 1000 * 50,
+    maxAge: 1000 * 5000,
     renew: true,
   };
 
   config.auth = {
-    exclude: ["/home", "/user", "/login", "/logout"],
+    exclude: ["/api/user/login", "/api/user/register"],
   };
 
   config.sequelize = {
@@ -73,8 +73,8 @@ module.exports = (appInfo) => {
   };
 
   config.jwt = {
-    secret: 'tour-server'
-  }
+    secret: "tour-server",
+  };
 
   // add your user config here
   const userConfig = {

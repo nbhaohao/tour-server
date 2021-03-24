@@ -55,7 +55,7 @@ class UserController extends Controller {
     const user = await ctx.service.user.getUser(username, password);
     if (user) {
       const token = await this.jwtSign();
-      ctx.session.username = 1;
+      ctx.session[username] = 1;
       ctx.body = {
         status: 200,
         data: {
