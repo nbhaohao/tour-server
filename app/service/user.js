@@ -1,12 +1,11 @@
 "use strict";
 
-const Service = require("egg").Service;
+const BaseService = require("./base");
 const md5 = require("md5");
 
-class UserService extends Service {
+class UserService extends BaseService {
   async getUser(username, password) {
-    try {
-      const { ctx, app } = this;
+    return this.run(async (ctx, app) => {
       const _where = password
         ? { username, password: md5(`${password}${app.config.SALT}`) }
         : { username };
@@ -14,20 +13,13 @@ class UserService extends Service {
         where: _where,
       });
       return result;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    });
   }
   async add(params) {
-    try {
-      const { ctx } = this;
+    return this.run(async (ctx, app) => {
       const result = await ctx.model.User.create(params);
       return result;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+    });
   }
 }
 
