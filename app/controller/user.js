@@ -14,6 +14,7 @@ class UserController extends Controller {
       },
       app.config.jwt.secret
     );
+    await app.redis.set(username, 1, "EX", app.config.REDIS_EXPIRED);
     return token;
   }
   async register() {
@@ -55,7 +56,6 @@ class UserController extends Controller {
     const user = await ctx.service.user.getUser(username, password);
     if (user) {
       const token = await this.jwtSign();
-      ctx.session[username] = 1;
       ctx.body = {
         status: 200,
         data: {
@@ -90,9 +90,9 @@ class UserController extends Controller {
     }
   }
   async logout() {
-    const { ctx } = this;
+    const { ctx, app } = this;
     try {
-      ctx.session[ctx.username] = null;
+      app.redis.set(ctx.username, null);
       ctx.body = {
         status: 200,
         data: "ok",

@@ -76,9 +76,19 @@ module.exports = (appInfo) => {
     secret: "tour-server",
   };
 
+  config.redis = {
+    client: {
+      port: 6379,
+      host: "127.0.0.1",
+      db: 0,
+      password: "auth",
+    },
+  };
+
   // add your user config here
   const userConfig = {
     SALT: "tour-server",
+    REDIS_EXPIRED: 5000
     // myAppName: 'egg',
   };
 

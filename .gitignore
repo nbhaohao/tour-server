@@ -4,3 +4,4 @@ htttpLog.log
 logs/
 typings/
 run/
+redisData/
