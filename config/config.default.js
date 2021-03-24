@@ -72,6 +72,10 @@ module.exports = (appInfo) => {
     },
   };
 
+  config.jwt = {
+    secret: 'tour-server'
+  }
+
   // add your user config here
   const userConfig = {
     SALT: "tour-server",

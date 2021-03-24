@@ -5,6 +5,17 @@ const md5 = require("md5");
 const dayjs = require("dayjs");
 
 class UserController extends Controller {
+  async jwtSign() {
+    const { ctx, app } = this;
+    const username = ctx.request.body.username;
+    const token = app.jwt.sign(
+      {
+        username,
+      },
+      app.config.jwt.secret
+    );
+    return token;
+  }
   async register() {
     const { ctx, app } = this;
     const params = ctx.request.body;
@@ -22,11 +33,13 @@ class UserController extends Controller {
       create_time: ctx.helper.time(),
     });
     if (result) {
+      const token = await this.jwtSign();
       ctx.body = {
         status: 200,
         data: {
           ...ctx.helper.unPick(result.dataValues, ["password"]),
           create_time: ctx.helper.timestamp(result.create_time),
+          token,
         },
       };
     } else {
@@ -41,7 +54,27 @@ class UserController extends Controller {
     const { username, password } = ctx.request.body;
     const user = await ctx.service.user.getUser(username, password);
     if (user) {
-      ctx.session.userId = user.id;
+      const token = await this.jwtSign();
+      ctx.session.username = 1;
+      ctx.body = {
+        status: 200,
+        data: {
+          ...ctx.helper.unPick(user.dataValues, ["password"]),
+          create_time: ctx.helper.timestamp(user.create_time),
+          token,
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 500,
+        errMsg: "该用户不存在",
+      };
+    }
+  }
+  async detail() {
+    const { ctx } = this;
+    const user = await ctx.service.user.getUser(ctx.username);
+    if (user) {
       ctx.body = {
         status: 200,
         data: {
