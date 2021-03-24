@@ -88,7 +88,7 @@ module.exports = (appInfo) => {
   // add your user config here
   const userConfig = {
     SALT: "tour-server",
-    REDIS_EXPIRED: 5000
+    REDIS_EXPIRED: 5000,
     // myAppName: 'egg',
   };
 

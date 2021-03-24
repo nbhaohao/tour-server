@@ -63,14 +63,14 @@ class UserController extends BaseController {
   async detail() {
     const { ctx } = this;
     const user = await ctx.service.user.getUser(ctx.username);
-    if (user) {
-      this.success({
-        ...ctx.helper.unPick(user.dataValues, ["password"]),
-        create_time: ctx.helper.timestamp(user.create_time),
-      });
-    } else {
-      this.fail("该用户不存在");
-    }
+    // if (user) {
+    this.success({
+      ...ctx.helper.unPick(user.dataValues, ["password"]),
+      create_time: ctx.helper.timestamp(user.create_time),
+    });
+    // } else {
+    //   this.fail("该用户不存在");
+    // }
   }
   async logout() {
     const { ctx, app } = this;
