@@ -14,15 +14,21 @@ module.exports = (app) => {
     create_time: {
       type: DATE,
       get() {
-        return new Date(this.getDataValue("created_time")).getTime();
+        return new Date(this.getDataValue("create_time")).getTime();
       },
     },
     update_time: {
       type: DATE,
       get() {
-        return new Date(this.getDataValue("created_time")).getTime();
+        return new Date(this.getDataValue("update_time")).getTime();
       },
     },
   });
+  Orders.associate = () => {
+    app.model.Orders.belongsTo(app.model.House, {
+      foreignKey: "house_id",
+      as: "house",
+    });
+  };
   return Orders;
 };
