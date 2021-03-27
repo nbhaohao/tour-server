@@ -2,6 +2,7 @@
 
 "use strict";
 const path = require("path");
+const { dbPass, redisPass } = require("../PASS");
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -64,7 +65,7 @@ module.exports = (appInfo) => {
     host: "127.0.0.1",
     port: "3306",
     user: "root",
-    password: "123456",
+    password: dbPass,
     database: "egg_house",
     define: {
       timestamps: false,
@@ -81,9 +82,11 @@ module.exports = (appInfo) => {
       port: 6379,
       host: "127.0.0.1",
       db: 0,
-      password: null
+      password: redisPass,
     },
   };
+
+  config.allowHosts = ["localhost:8000", "https://zhangzihao1.gitee.io"];
 
   // add your user config here
   const userConfig = {
