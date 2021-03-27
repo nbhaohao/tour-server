@@ -14,4 +14,5 @@ module.exports = (app) => {
   router.get("/api/commons/cities", controller.commons.cities);
   router.get("/api/house/hot", controller.house.hot);
   router.post("/api/house/search", controller.house.search);
+  router.get("/api/house/detail", controller.house.detail);
 };

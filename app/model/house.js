@@ -10,11 +10,26 @@ module.exports = (app) => {
     info: STRING(150),
     address: STRING(200),
     price: INTEGER,
-    publish_time: DATE,
+    publish_time: {
+      type: DATE,
+      get() {
+        return new Date(this.getDataValue("publish_time")).getTime();
+      },
+    },
     city_code: STRING,
     show_count: INTEGER,
-    start_time: DATE,
-    end_time: DATE,
+    start_time: {
+      type: DATE,
+      get() {
+        return new Date(this.getDataValue("start_time")).getTime();
+      },
+    },
+    end_time: {
+      type: DATE,
+      get() {
+        return new Date(this.getDataValue("end_time")).getTime();
+      },
+    },
   });
   // House -> Img 一对多
   House.associate = () => {

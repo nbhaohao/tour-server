@@ -52,6 +52,33 @@ class HouseService extends BaseService {
       return houses;
     });
   }
+  async detail(id) {
+    return this.run(async (ctx, app) => {
+      const house = await ctx.model.House.findOne({
+        where: {
+          id,
+        },
+        include: [
+          {
+            model: app.model.Img,
+            limit: 1,
+            attributes: ["url"],
+          },
+        ],
+      });
+      await ctx.model.House.update(
+        {
+          show_count: house.show_count + 1,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      return house;
+    });
+  }
 }
 
 module.exports = HouseService;
