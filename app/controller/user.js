@@ -4,12 +4,12 @@ const md5 = require("md5");
 const BaseController = require("./base");
 
 class UserController extends BaseController {
-  async jwtSign() {
-    const { ctx, app } = this;
-    const username = ctx.params("username");
+  async jwtSign({ id, username }) {
+    const { app } = this;
     const token = app.jwt.sign(
       {
         username,
+        id,
       },
       app.config.jwt.secret
     );
@@ -36,7 +36,10 @@ class UserController extends BaseController {
       create_time: ctx.helper.time(),
     });
     if (result) {
-      const token = await this.jwtSign();
+      const token = await this.jwtSign({
+        id: result.id,
+        username: result.username,
+      });
       this.success({
         ...ctx.helper.unPick(result.dataValues, ["password"]),
         create_time: ctx.helper.timestamp(result.create_time),
@@ -51,7 +54,10 @@ class UserController extends BaseController {
     const { username, password } = ctx.params();
     const user = await ctx.service.user.getUser(username, password);
     if (user) {
-      const token = await this.jwtSign();
+      const token = await this.jwtSign({
+        id: user.id,
+        username: user.username,
+      });
       this.success({
         ...this.parseResult(ctx, user),
         token,

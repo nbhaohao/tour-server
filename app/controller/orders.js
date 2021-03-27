@@ -2,19 +2,17 @@ const BaseController = require("./base");
 
 class OrdersController extends BaseController {
   async hasOrder() {
-    const { ctx, app } = this;
-    const user = await ctx.service.user.getUser(ctx.username);
+    const { ctx } = this;
     const result = await ctx.service.orders.hasOrder({
-      userId: user.id,
+      userId: ctx.userId,
       houseId: ctx.params("id"),
     });
     this.success(result);
   }
   async addOrder() {
-    const { ctx, app } = this;
-    const user = await ctx.service.user.getUser(ctx.username);
+    const { ctx } = this;
     const result = await ctx.service.orders.addOrder({
-      user_id: user.id,
+      userId: ctx.userId,
       house_id: ctx.params("id"),
       is_payed: 0,
       create_time: ctx.helper.time(),
@@ -22,17 +20,15 @@ class OrdersController extends BaseController {
     this.success(result);
   }
   async delOrder() {
-    const { ctx, app } = this;
-    const user = await ctx.service.user.getUser(ctx.username);
+    const { ctx } = this;
     const result = await ctx.service.orders.delOrder(ctx.params("id"));
     this.success(result);
   }
   async lists() {
-    const { ctx, app } = this;
-    const user = await ctx.service.user.getUser(ctx.username);
+    const { ctx } = this;
     const result = await ctx.service.orders.lists({
       ...ctx.params(),
-      userId: user.id,
+      userId: ctx.userId,
     });
     this.success(result);
   }
