@@ -15,4 +15,6 @@ module.exports = (app) => {
   router.get("/api/house/hot", controller.house.hot);
   router.post("/api/house/search", controller.house.search);
   router.get("/api/house/detail", controller.house.detail);
+  router.post("/api/comment/add", controller.comment.add);
+  router.post("/api/comment/lists", controller.comment.lists);
 };
