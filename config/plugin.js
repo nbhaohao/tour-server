@@ -45,3 +45,7 @@ exports.allowHosts = {
   enable: true,
   path: path.join(__dirname, "../lib/plugin/egg-allow-hosts"),
 };
+exports.cors = {
+  enable: true,
+  package: "egg-cors",
+};

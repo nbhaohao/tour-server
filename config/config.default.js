@@ -85,7 +85,10 @@ module.exports = (appInfo) => {
       password: redisPass,
     },
   };
-
+  config.cors = {
+    origin: "*",
+    allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
+  };
   config.allowHosts = ["localhost:8000", "https://zhangzihao1.gitee.io"];
 
   // add your user config here
