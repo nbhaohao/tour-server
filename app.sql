@@ -61,3 +61,18 @@ create table comment
 ) engine = innoDB
   auto_increment = 1
   default charset = utf8 comment '评论表';
+-- 订单表
+create table orders
+(
+    id           int not null auto_increment,
+    order_number varchar(20) default null comment '订单编号',
+    user_id      int not null comment '用户 id',
+    house_id     int not null comment '房屋 id',
+    is_payed     int         default 0 comment '是否支付, 0 未支付 1 已支付',
+    create_time  timestamp   default null comment '创建时间',
+    update_time  timestamp   default null comment '更新时间',
+    primary key (id)
+) engine = innoDB
+  auto_increment = 1
+  default charset = utf8
+    comment '订单表'
