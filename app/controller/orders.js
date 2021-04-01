@@ -12,7 +12,7 @@ class OrdersController extends BaseController {
   async addOrder() {
     const { ctx } = this;
     const result = await ctx.service.orders.addOrder({
-      userId: ctx.userId,
+      user_id: ctx.userId,
       house_id: ctx.params("id"),
       is_payed: 0,
       create_time: ctx.helper.time(),
