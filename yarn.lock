@@ -2873,6 +2873,15 @@ egg-path-matching@^1.0.0, egg-path-matching@^1.0.1:
   dependencies:
     path-to-regexp "^1.7.0"
 
+egg-ratelimiter@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.npm.taobao.org/egg-ratelimiter/download/egg-ratelimiter-0.1.0.tgz#b6cf2f4428a49604d13254ac3e309d86b280ccfc"
+  integrity sha1-ts8vRCiklgTRMlSsPjCdhrKAzPw=
+  dependencies:
+    debug "^4.1.0"
+    ms "^2.1.1"
+    ratelimiter "^3.2.0"
+
 egg-redis@^2.4.0:
   version "2.4.0"
   resolved "https://registry.npm.taobao.org/egg-redis/download/egg-redis-2.4.0.tgz#9773adfce34b8eb902610eda7525ccfefd87a735"
@@ -6375,6 +6384,11 @@ random-bytes@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npm.taobao.org/random-bytes/download/random-bytes-1.0.0.tgz#4f68a1dc0ae58bd3fb95848c30324db75d64360b"
   integrity sha1-T2ih3Arli9P7lYSMMDJNt11kNgs=
+
+ratelimiter@^3.2.0:
+  version "3.4.1"
+  resolved "https://registry.npm.taobao.org/ratelimiter/download/ratelimiter-3.4.1.tgz#fa69e94937413382a926aaa17aaeaa6263af4659"
+  integrity sha1-+mnpSTdBM4KpJqqheq6qYmOvRlk=
 
 raw-body@^2.2.0, raw-body@^2.3.3:
   version "2.4.1"

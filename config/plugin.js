@@ -36,6 +36,11 @@ exports.redis = {
   package: "egg-redis",
 };
 
+exports.ratelimiter = {
+  enable: true,
+  package: "egg-ratelimiter",
+};
+
 exports.notFound = {
   enable: true,
   path: path.join(__dirname, "../lib/plugin/egg-not-found"),

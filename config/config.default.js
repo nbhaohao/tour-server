@@ -89,8 +89,23 @@ module.exports = (appInfo) => {
     origin: "*",
     allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH",
   };
-  config.allowHosts = ["localhost:8000", "https://zhangzihao1.gitee.io"];
-
+  config.allowHosts = ["localhost:8000", "zhangzihao1.gitee.io"];
+  config.ratelimiter = {
+    router: [
+      {
+        path: "/api/comment/add",
+        max: 1,
+        time: "5s", //时间单位 s m h d y ...
+        message: "请求频率过快，请稍后再试", //自定义请求超限错误信息
+      },
+      {
+        path: "/api/user/register",
+        max: 1,
+        time: "5s", //时间单位 s m h d y ...
+        message: "请求频率过快，请稍后再试", //自定义请求超限错误信息
+      },
+    ],
+  };
   // add your user config here
   const userConfig = {
     SALT: "tour-server",
